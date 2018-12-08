@@ -42,32 +42,32 @@ class App extends Component
         });
     }
     //funcion botonazoParametro
+    //obtiene el contenido del input valor
+    //si tiene contenido
+    //Se utiliza para acceder al metodo pruebaParametro del web service y se le envia el valor
+    //convierne la respuesta del web service en un json
+    //cada elemento del json lo tomara en la variable campo
+    //envia valores a las variables globales
+    //agrega el elemento del json a la cadena de mensaje (es cadena porque se esta obteniendo el campo mensaje)
+    //muestra el mensaje
+    //si no tiene contenido
+    //similar al required
     botonazoParametro()
     {
-        //obtiene el contenido del input valor
         var contenido=document.getElementById("valor").value
-        //si tiene contenido
         if(contenido)
         {
-            //Se utiliza para acceder al metodo pruebaParametro del web service y se le envia el valor
             fetch('http://localhost:8080/pruebaParametro?valor='+contenido)
-            //convierne la respuesta del web service en un json
             .then(response => response.json())
-            //cada elemento del json lo tomara en la variable campo
             .then((campo) => {
-                //envia valores a las variables globales
                 this.setState({
-                    //agrega el elemento del json a la cadena de mensaje (es cadena porque se esta obteniendo el campo mensaje)
                     mensaje: campo.mensaje
                 });
-                //muestra el mensaje
                 console.log(this.state.mensaje);
             });
         }
-        //si no tiene contenido
         else
         {
-            //similar al required
             alert("Es un Campo Requerido");
         }
     }
@@ -78,20 +78,19 @@ class App extends Component
         const ingredientes = this.state.datosIngrediente.map((ingrediente,i) => {
             return(
                 //retornara 1 div para cada elemento del arreglo datosIngrediente en las variables globales, si no se coloca key falla
+                //Se asigna el campo nombreIngrediente del elemento (recordar que se almacenaron como objetos en el arreglo)
+                //Se asigna un guion entre los 2 datos
+                //Se asigna el campo nombreImagen del elemento (recordar que se almacenaron como objetos en el arreglo)
                 <div key={i}>
-                    //Se asigna el campo nombreIngrediente del elemento (recordar que se almacenaron como objetos en el arreglo)
                     {ingrediente.nombreIngrediente}
-                    //Se asigna un guion entre los 2 datos
                     " - "
-                    //Se asigna el campo nombreImagen del elemento (recordar que se almacenaron como objetos en el arreglo)
                     {ingrediente.nombreImagen}
                 </div>
             );
         })
-        //Declaracion de constante mensaje, y se le asigna la cadena mensaje de las variables globales
+         //Declaracion de constante mensaje, y se le asigna la cadena mensaje de las variables globales
         const mensaje = <div>{this.state.mensaje}</div>
         //Metodo necesario en un render
-        //retornara 1 div
         //Se declara un input tipo button con un onclick que llama a la funcion botonazo
         //Se declara un label y se asigna al input con nombre valor
         //Se declara un input tipo number con un name y id valor
@@ -99,6 +98,7 @@ class App extends Component
         //Se muestra el contenido de la constante ingredientes que se genero anteriormente
         //Se muestra el contenido de la constante mensaje que se genero anteriormente
         return(
+            //retornara 1 div
             <div>
                 <input type="button" value="Dale click" onClick={this.botonazo}></input>
                 <br/>
